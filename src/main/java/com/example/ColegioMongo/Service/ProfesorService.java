@@ -26,7 +26,6 @@ public class ProfesorService {
     }
 
     private void validarProfesor(Profesor profesor) {
-        // Validar que el nombre no esté vacío
         if (profesor.getNombre() == null || profesor.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del profesor no puede estar vacío");
         }
