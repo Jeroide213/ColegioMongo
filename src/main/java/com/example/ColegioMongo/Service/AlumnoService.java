@@ -38,10 +38,28 @@ public class AlumnoService {
         if (alumno.getNombre() == null || alumno.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del alumno no puede estar vacío");
         }
+
+        if (alumno.getApellido() == null || alumno.getApellido().isEmpty()) {
+            throw new IllegalArgumentException("El apellido del alumno no puede estar vacío");
+        }
+
         if (alumno.getFechaDeNacimiento() == null || alumno.getFechaDeNacimiento().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("La fecha de nacimiento del alumno debe ser una fecha válida en el pasado");
+            throw new IllegalArgumentException("La fecha de nacimiento del alumno no es válida");
+        }
+
+        if (alumno.getCiclo() == null || alumno.getCiclo().isEmpty()) {
+            throw new IllegalArgumentException("El ciclo del alumno no puede estar vacío");
+        }
+
+        if (alumno.getEspecialidad() == null || alumno.getEspecialidad().isEmpty()) {
+            throw new IllegalArgumentException("La especialidad del alumno no puede estar vacía");
+        }
+
+        if (alumno.getEdad() <= 0) {
+            throw new IllegalArgumentException("La edad del alumno no es válida");
         }
     }
+
     public Optional<Alumno> actualizar(Long id, Alumno nuevoAlumno) {
         Optional<Alumno> alumnoOptional = alumnoRepository.findById(id);
         if (alumnoOptional.isPresent()) {

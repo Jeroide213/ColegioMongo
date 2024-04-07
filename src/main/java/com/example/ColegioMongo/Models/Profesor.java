@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Document
 public class Profesor {
@@ -14,7 +15,14 @@ public class Profesor {
     private LocalDate fechaDeNacimiento;
     private int antiguedad;
     private byte[] matricula;
-    private int edad;
+    public int getEdad() {
+        if (fechaDeNacimiento != null) {
+            LocalDate ahora = LocalDate.now();
+            return Period.between(fechaDeNacimiento, ahora).getYears();
+        } else {
+            return 0;
+        }
+    }
 
     public Long getId() {
         return id;
@@ -64,24 +72,15 @@ public class Profesor {
         this.matricula = matricula;
     }
 
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
     public Profesor() {
     }
 
-    public Profesor(Long id, String nombre, String apellido, LocalDate fechaDeNacimiento, int antiguedad, byte[] matricula, int edad) {
+    public Profesor(Long id, String nombre, String apellido, LocalDate fechaDeNacimiento, int antiguedad, byte[] matricula) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.antiguedad = antiguedad;
         this.matricula = matricula;
-        this.edad = edad;
     }
 }
