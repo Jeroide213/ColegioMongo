@@ -21,11 +21,9 @@ public class MateriaService {
     public List<Materia> obtenerTodos() {
         return materiaRepository.findAll();
     }
-
     public Optional<Materia> obtenerPorId(Long id) {
         return materiaRepository.findById(id);
     }
-
     public Materia guardar(Materia materia) {
         return materiaRepository.save(materia);
     }

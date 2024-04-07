@@ -1,7 +1,9 @@
 package com.example.ColegioMongo.Service;
 
 import com.example.ColegioMongo.Models.Horario;
+import com.example.ColegioMongo.Models.Materia;
 import com.example.ColegioMongo.Repository.HorarioRepository;
+import com.example.ColegioMongo.Repository.MateriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.Optional;
 public class HorarioService {
     @Autowired
     private HorarioRepository horarioRepository;
+    @Autowired
+    private MateriaRepository materiaRepository;
 
     public List<Horario> obtenerTodos() {
         return horarioRepository.findAll();
@@ -33,6 +37,19 @@ public class HorarioService {
             throw new IllegalArgumentException("No se pueden programar horarios para los domingos");
         }
         return horarioRepository.save(horario);
+    }
+    public void asignarMateria(Long idHorario, Long idMateria) {
+        Optional<Horario> horarioOptional = horarioRepository.findById(idHorario);
+        Optional<Materia> materiaOptional = materiaRepository.findById(idMateria);
+
+        if (horarioOptional.isPresent() && materiaOptional.isPresent()) {
+            Horario horario = horarioOptional.get();
+            Materia materia = materiaOptional.get();
+            horario.setMateria(materia);
+            horarioRepository.save(horario);
+        } else {
+            throw new IllegalArgumentException("No se encontró el horario o la materia.");
+        }
     }
 
     public Optional<Horario> actualizar(Long id, Horario nuevoHorario) {
