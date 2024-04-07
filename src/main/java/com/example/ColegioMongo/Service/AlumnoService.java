@@ -1,11 +1,14 @@
 package com.example.ColegioMongo.Service;
 
 import com.example.ColegioMongo.Models.Alumno;
+import com.example.ColegioMongo.Models.Curso;
 import com.example.ColegioMongo.Repository.AlumnoRepository;
+import com.example.ColegioMongo.Repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,9 @@ import java.util.Optional;
 public class AlumnoService {
     @Autowired
     private AlumnoRepository alumnoRepository;
+
+    @Autowired
+    private CursoRepository cursoRepository;
 
     public List<Alumno> obtenerTodos() {
         return alumnoRepository.findAll();
@@ -34,6 +40,35 @@ public class AlumnoService {
     public List<Alumno> buscarPorNombre(String nombre) {
         return alumnoRepository.findByNombre(nombre);
     }
+
+    public Optional<Alumno> actualizar(Long id, Alumno nuevoAlumno) {
+        Optional<Alumno> alumnoOptional = alumnoRepository.findById(id);
+        if (alumnoOptional.isPresent()) {
+            nuevoAlumno.setId(id);
+            return Optional.of(alumnoRepository.save(nuevoAlumno));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public void agregarAlumnoACurso(Long idAlumno, Long idCurso) {
+        Optional<Alumno> alumnoOptional = alumnoRepository.findById(idAlumno);
+        Optional<Curso> cursoOptional = cursoRepository.findById(idCurso);
+        if (alumnoOptional.isPresent() && cursoOptional.isPresent()) {
+            Alumno alumno = alumnoOptional.get();
+            Curso curso = cursoOptional.get();
+            List<Alumno> alumnosCurso = curso.getAlumnos();
+            if (alumnosCurso == null) {
+                alumnosCurso = new ArrayList<>();
+            }
+            alumnosCurso.add(alumno);
+            curso.setAlumnos(alumnosCurso);
+            cursoRepository.save(curso);
+        } else {
+            throw new IllegalArgumentException("No se encontró el alumno o el curso.");
+        }
+    }
+
     private void validarAlumno(Alumno alumno) {
         if (alumno.getNombre() == null || alumno.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del alumno no puede estar vacío");
@@ -53,20 +88,6 @@ public class AlumnoService {
 
         if (alumno.getEspecialidad() == null || alumno.getEspecialidad().isEmpty()) {
             throw new IllegalArgumentException("La especialidad del alumno no puede estar vacía");
-        }
-
-        if (alumno.getEdad() <= 0) {
-            throw new IllegalArgumentException("La edad del alumno no es válida");
-        }
-    }
-
-    public Optional<Alumno> actualizar(Long id, Alumno nuevoAlumno) {
-        Optional<Alumno> alumnoOptional = alumnoRepository.findById(id);
-        if (alumnoOptional.isPresent()) {
-            nuevoAlumno.setId(id);
-            return Optional.of(alumnoRepository.save(nuevoAlumno));
-        } else {
-            return Optional.empty();
         }
     }
 }
