@@ -47,5 +47,4 @@ public class HorarioService {
     public void eliminar(Long id) {
         horarioRepository.deleteById(id);
     }
-
 }

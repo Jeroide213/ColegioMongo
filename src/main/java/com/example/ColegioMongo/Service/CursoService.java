@@ -22,6 +22,9 @@ public class CursoService {
     }
 
     public Curso guardar(Curso curso) {
+        if (curso.getNombre() == null || curso.getNombre().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del curso es obligatorio");
+        }
         return cursoRepository.save(curso);
     }
 
