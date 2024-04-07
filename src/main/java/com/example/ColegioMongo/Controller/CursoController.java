@@ -2,6 +2,7 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Curso;
 import com.example.ColegioMongo.Service.CursoService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> obtenerPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Curso> obtenerPorId(@PathVariable("id") ObjectId id) {
         Optional<Curso> curso = cursoService.obtenerPorId(id);
         if (curso.isPresent()) {
             return new ResponseEntity<>(curso.get(), HttpStatus.OK);
@@ -39,7 +40,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> actualizar(@PathVariable("id") Long id, @RequestBody Curso nuevoCurso) {
+    public ResponseEntity<Curso> actualizar(@PathVariable("id") ObjectId id, @RequestBody Curso nuevoCurso) {
         Optional<Curso> cursoActualizado = cursoService.actualizar(id, nuevoCurso);
         if (cursoActualizado.isPresent()) {
             return new ResponseEntity<>(cursoActualizado.get(), HttpStatus.OK);
@@ -49,7 +50,7 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
         cursoService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

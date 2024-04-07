@@ -2,6 +2,7 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Materia;
 import com.example.ColegioMongo.Service.MateriaService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class MateriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Materia> obtenerPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Materia> obtenerPorId(@PathVariable("id") ObjectId id) {
         Optional<Materia> materia = materiaService.obtenerPorId(id);
         if (materia.isPresent()) {
             return new ResponseEntity<>(materia.get(), HttpStatus.OK);
@@ -39,7 +40,7 @@ public class MateriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Materia> actualizar(@PathVariable("id") Long id, @RequestBody Materia nuevaMateria) {
+    public ResponseEntity<Materia> actualizar(@PathVariable("id") ObjectId id, @RequestBody Materia nuevaMateria) {
         Optional<Materia> materiaActualizada = materiaService.actualizar(id, nuevaMateria);
         if (materiaActualizada.isPresent()) {
             return new ResponseEntity<>(materiaActualizada.get(), HttpStatus.OK);
@@ -49,7 +50,7 @@ public class MateriaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
         materiaService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

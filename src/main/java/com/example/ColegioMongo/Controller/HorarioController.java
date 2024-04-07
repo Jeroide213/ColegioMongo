@@ -2,6 +2,7 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Horario;
 import com.example.ColegioMongo.Service.HorarioService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class HorarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Horario> obtenerPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Horario> obtenerPorId(@PathVariable("id") ObjectId id) {
         Optional<Horario> horario = horarioService.obtenerPorId(id);
         if (horario.isPresent()) {
             return new ResponseEntity<>(horario.get(), HttpStatus.OK);
@@ -39,7 +40,7 @@ public class HorarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Horario> actualizar(@PathVariable("id") Long id, @RequestBody Horario nuevoHorario) {
+    public ResponseEntity<Horario> actualizar(@PathVariable("id") ObjectId id, @RequestBody Horario nuevoHorario) {
         Optional<Horario> horarioActualizado = horarioService.actualizar(id, nuevoHorario);
         if (horarioActualizado.isPresent()) {
             return new ResponseEntity<>(horarioActualizado.get(), HttpStatus.OK);
@@ -49,7 +50,7 @@ public class HorarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
         horarioService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

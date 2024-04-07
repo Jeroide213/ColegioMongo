@@ -4,6 +4,7 @@ import com.example.ColegioMongo.Models.Horario;
 import com.example.ColegioMongo.Models.Materia;
 import com.example.ColegioMongo.Repository.HorarioRepository;
 import com.example.ColegioMongo.Repository.MateriaRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class HorarioService {
         return horarioRepository.findAll();
     }
 
-    public Optional<Horario> obtenerPorId(Long id) {
+    public Optional<Horario> obtenerPorId(ObjectId id) {
         return horarioRepository.findById(id);
     }
 
@@ -38,7 +39,7 @@ public class HorarioService {
         }
         return horarioRepository.save(horario);
     }
-    public void asignarMateria(Long idHorario, Long idMateria) {
+    public void asignarMateria(ObjectId idHorario, ObjectId idMateria) {
         Optional<Horario> horarioOptional = horarioRepository.findById(idHorario);
         Optional<Materia> materiaOptional = materiaRepository.findById(idMateria);
 
@@ -52,7 +53,7 @@ public class HorarioService {
         }
     }
 
-    public Optional<Horario> actualizar(Long id, Horario nuevoHorario) {
+    public Optional<Horario> actualizar(ObjectId id, Horario nuevoHorario) {
         Optional<Horario> horarioOptional = horarioRepository.findById(id);
         if (horarioOptional.isPresent()) {
             nuevoHorario.setId(id);
@@ -61,7 +62,7 @@ public class HorarioService {
             return Optional.empty();
         }
     }
-    public void eliminar(Long id) {
+    public void eliminar(ObjectId id) {
         horarioRepository.deleteById(id);
     }
 }

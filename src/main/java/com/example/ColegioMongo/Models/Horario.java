@@ -1,5 +1,6 @@
 package com.example.ColegioMongo.Models;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,17 +10,17 @@ import java.time.LocalTime;
 @Document
 public class Horario {
     @Id
-    private Long id;
+    private ObjectId id;
     private DayOfWeek diaSemana;
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private Materia materia;
 
-    public Long getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -58,7 +59,7 @@ public class Horario {
     public Horario() {
     }
 
-    public Horario(Long id, DayOfWeek diaSemana, LocalTime horaInicio, LocalTime horaFin, Materia materia) {
+    public Horario(ObjectId id, DayOfWeek diaSemana, LocalTime horaInicio, LocalTime horaFin, Materia materia) {
         this.id = id;
         this.diaSemana = diaSemana;
         this.horaInicio = horaInicio;

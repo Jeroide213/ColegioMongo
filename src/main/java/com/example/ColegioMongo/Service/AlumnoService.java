@@ -4,6 +4,7 @@ import com.example.ColegioMongo.Models.Alumno;
 import com.example.ColegioMongo.Models.Curso;
 import com.example.ColegioMongo.Repository.AlumnoRepository;
 import com.example.ColegioMongo.Repository.CursoRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class AlumnoService {
         return alumnoRepository.findAll();
     }
 
-    public Optional<Alumno> obtenerPorId(Long id) {
+    public Optional<Alumno> obtenerPorId(ObjectId id) {
         return alumnoRepository.findById(id);
     }
 
@@ -33,7 +34,7 @@ public class AlumnoService {
         return alumnoRepository.save(alumno);
     }
 
-    public void eliminar(Long id) {
+    public void eliminar(ObjectId id) {
         alumnoRepository.deleteById(id);
     }
 
@@ -41,7 +42,7 @@ public class AlumnoService {
         return alumnoRepository.findByNombre(nombre);
     }
 
-    public Optional<Alumno> actualizar(Long id, Alumno nuevoAlumno) {
+    public Optional<Alumno> actualizar(ObjectId id, Alumno nuevoAlumno) {
         Optional<Alumno> alumnoOptional = alumnoRepository.findById(id);
         if (alumnoOptional.isPresent()) {
             nuevoAlumno.setId(id);
@@ -51,7 +52,7 @@ public class AlumnoService {
         }
     }
 
-    public void agregarAlumnoACurso(Long idAlumno, Long idCurso) {
+    public void agregarAlumnoACurso(ObjectId idAlumno, ObjectId idCurso) {
         Optional<Alumno> alumnoOptional = alumnoRepository.findById(idAlumno);
         Optional<Curso> cursoOptional = cursoRepository.findById(idCurso);
         if (alumnoOptional.isPresent() && cursoOptional.isPresent()) {

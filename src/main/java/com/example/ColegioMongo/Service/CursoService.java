@@ -3,6 +3,7 @@ package com.example.ColegioMongo.Service;
 import com.example.ColegioMongo.Models.Curso;
 import com.example.ColegioMongo.Models.Materia;
 import com.example.ColegioMongo.Repository.CursoRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class CursoService {
         return cursoRepository.findAll();
     }
 
-    public Optional<Curso> obtenerPorId(Long id) {
+    public Optional<Curso> obtenerPorId(ObjectId id) {
         return cursoRepository.findById(id);
     }
 
@@ -33,11 +34,11 @@ public class CursoService {
         return cursoRepository.save(curso);
     }
 
-    public void eliminar(Long id) {
+    public void eliminar(ObjectId id) {
         cursoRepository.deleteById(id);
     }
 
-    public Optional<Curso> actualizar(Long id, Curso nuevoCurso) {
+    public Optional<Curso> actualizar(ObjectId id, Curso nuevoCurso) {
         Optional<Curso> cursoOptional = cursoRepository.findById(id);
         if (cursoOptional.isPresent()) {
             nuevoCurso.setId(id);
@@ -46,7 +47,7 @@ public class CursoService {
             return Optional.empty();
         }
     }
-    public Materia agregarMateriaACurso(Long cursoId, Long materiaId) {
+    public Materia agregarMateriaACurso(ObjectId cursoId, ObjectId materiaId) {
         Optional<Curso> cursoOptional = cursoRepository.findById(cursoId);
         if (cursoOptional.isPresent()) {
             Optional<Materia> materiaOptional = materiaService.obtenerPorId(materiaId);

@@ -2,6 +2,7 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Alumno;
 import com.example.ColegioMongo.Service.AlumnoService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AlumnoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Alumno> obtenerPorId(@PathVariable("id") Long id) {
+    public ResponseEntity<Alumno> obtenerPorId(@PathVariable("id") ObjectId id) {
         Optional<Alumno> alumno = alumnoService.obtenerPorId(id);
         if (alumno.isPresent()) {
             return new ResponseEntity<>(alumno.get(), HttpStatus.OK);
@@ -39,12 +40,12 @@ public class AlumnoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
         alumnoService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Alumno> actualizar(@PathVariable("id") Long id, @RequestBody Alumno nuevoAlumno) {
+    public ResponseEntity<Alumno> actualizar(@PathVariable("id") ObjectId id, @RequestBody Alumno nuevoAlumno) {
         Optional<Alumno> alumnoActualizado = alumnoService.actualizar(id, nuevoAlumno);
         if (alumnoActualizado.isPresent()) {
             return new ResponseEntity<>(alumnoActualizado.get(), HttpStatus.OK);
