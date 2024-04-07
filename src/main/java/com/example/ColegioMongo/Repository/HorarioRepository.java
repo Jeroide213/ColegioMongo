@@ -10,5 +10,5 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface HorarioRepository extends MongoRepository<Horario, ObjectId> {
+public interface HorarioRepository extends MongoRepository<Horario, String> {
 }

@@ -9,16 +9,16 @@ import java.util.List;
 @Document
 public class Curso {
     @Id
-    private ObjectId id;
+    private String id;
     private String nombre;
     private List<Alumno> alumnos;
     private List<Materia> materias;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,7 +49,7 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(ObjectId id, String nombre, List<Alumno> alumnos, List<Materia> materias) {
+    public Curso(String id, String nombre, List<Alumno> alumnos, List<Materia> materias) {
         this.id = id;
         this.nombre = nombre;
         this.alumnos = alumnos;

@@ -10,7 +10,7 @@ import java.time.Period;
 @Document
 public class Profesor {
     @Id
-    private ObjectId id;
+    private String id;
     private String nombre;
     private String apellido;
     private LocalDate fechaDeNacimiento;
@@ -25,11 +25,11 @@ public class Profesor {
         }
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -76,7 +76,7 @@ public class Profesor {
     public Profesor() {
     }
 
-    public Profesor(ObjectId id, String nombre, String apellido, LocalDate fechaDeNacimiento, int antiguedad, byte[] matricula) {
+    public Profesor(String id, String nombre, String apellido, LocalDate fechaDeNacimiento, int antiguedad, byte[] matricula) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;

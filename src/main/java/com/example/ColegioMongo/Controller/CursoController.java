@@ -24,7 +24,7 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Curso> obtenerPorId(@PathVariable("id") ObjectId id) {
+    public ResponseEntity<Curso> obtenerPorId(@PathVariable("id") String id) {
         Optional<Curso> curso = cursoService.obtenerPorId(id);
         if (curso.isPresent()) {
             return new ResponseEntity<>(curso.get(), HttpStatus.OK);
@@ -40,7 +40,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Curso> actualizar(@PathVariable("id") ObjectId id, @RequestBody Curso nuevoCurso) {
+    public ResponseEntity<Curso> actualizar(@PathVariable("id") String id, @RequestBody Curso nuevoCurso) {
         Optional<Curso> cursoActualizado = cursoService.actualizar(id, nuevoCurso);
         if (cursoActualizado.isPresent()) {
             return new ResponseEntity<>(cursoActualizado.get(), HttpStatus.OK);
@@ -50,7 +50,7 @@ public class CursoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") String id) {
         cursoService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CursoRepository extends MongoRepository<Curso, ObjectId> {
+public interface CursoRepository extends MongoRepository<Curso, String> {
     List<Curso> findByNombre(String nombre);
 }

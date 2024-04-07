@@ -1,6 +1,5 @@
 package com.example.ColegioMongo.Models;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,7 +9,7 @@ import java.time.Period;
 @Document
 public class Alumno {
     @Id
-    private ObjectId id;
+    private String id;
     private String nombre;
     private String Apellido;
     private LocalDate fechaDeNacimiento;
@@ -29,11 +28,11 @@ public class Alumno {
         }
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -104,7 +103,7 @@ public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(ObjectId id, String nombre, String apellido, LocalDate fechaDeNacimiento, byte[] contenidoPdf, String ciclo, String especialidad, int faltas, int amonestaciones) {
+    public Alumno(String id, String nombre, String apellido, LocalDate fechaDeNacimiento, byte[] contenidoPdf, String ciclo, String especialidad, int faltas, int amonestaciones) {
         this.id = id;
         this.nombre = nombre;
         Apellido = apellido;

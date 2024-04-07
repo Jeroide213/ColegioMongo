@@ -18,7 +18,7 @@ public class ProfesorService {
     public List<Profesor> obtenerTodos() {
         return profesorRepository.findAll();
     }
-    public Optional<Profesor> obtenerPorId(ObjectId id) {
+    public Optional<Profesor> obtenerPorId(String id) {
         return profesorRepository.findById(id);
     }
     public Profesor guardar(Profesor profesor) {
@@ -40,11 +40,11 @@ public class ProfesorService {
             throw new IllegalArgumentException("La edad del profesor no es válida");
         }
     }
-    public void eliminar(ObjectId id) {
+    public void eliminar(String id) {
         profesorRepository.deleteById(id);
 
     }
-    public Optional<Profesor> actualizar(ObjectId id, Profesor nuevoProfesor) {
+    public Optional<Profesor> actualizar(String id, Profesor nuevoProfesor) {
         Optional<Profesor> profesorOptional = profesorRepository.findById(id);
         if (profesorOptional.isPresent()) {
             nuevoProfesor.setId(id);

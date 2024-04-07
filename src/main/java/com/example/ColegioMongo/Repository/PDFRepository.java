@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 @Document
-public interface PDFRepository extends MongoRepository<PDF, ObjectId> {
+public interface PDFRepository extends MongoRepository<PDF, String> {
 }

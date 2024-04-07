@@ -23,7 +23,7 @@ public class HorarioService {
         return horarioRepository.findAll();
     }
 
-    public Optional<Horario> obtenerPorId(ObjectId id) {
+    public Optional<Horario> obtenerPorId(String id) {
         return horarioRepository.findById(id);
     }
 
@@ -39,7 +39,7 @@ public class HorarioService {
         }
         return horarioRepository.save(horario);
     }
-    public void asignarMateria(ObjectId idHorario, ObjectId idMateria) {
+    public void asignarMateria(String idHorario, String idMateria) {
         Optional<Horario> horarioOptional = horarioRepository.findById(idHorario);
         Optional<Materia> materiaOptional = materiaRepository.findById(idMateria);
 
@@ -53,7 +53,7 @@ public class HorarioService {
         }
     }
 
-    public Optional<Horario> actualizar(ObjectId id, Horario nuevoHorario) {
+    public Optional<Horario> actualizar(String id, Horario nuevoHorario) {
         Optional<Horario> horarioOptional = horarioRepository.findById(id);
         if (horarioOptional.isPresent()) {
             nuevoHorario.setId(id);
@@ -62,7 +62,7 @@ public class HorarioService {
             return Optional.empty();
         }
     }
-    public void eliminar(ObjectId id) {
+    public void eliminar(String id) {
         horarioRepository.deleteById(id);
     }
 }

@@ -24,7 +24,7 @@ public class HorarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Horario> obtenerPorId(@PathVariable("id") ObjectId id) {
+    public ResponseEntity<Horario> obtenerPorId(@PathVariable("id") String id) {
         Optional<Horario> horario = horarioService.obtenerPorId(id);
         if (horario.isPresent()) {
             return new ResponseEntity<>(horario.get(), HttpStatus.OK);
@@ -40,7 +40,7 @@ public class HorarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Horario> actualizar(@PathVariable("id") ObjectId id, @RequestBody Horario nuevoHorario) {
+    public ResponseEntity<Horario> actualizar(@PathVariable("id") String id, @RequestBody Horario nuevoHorario) {
         Optional<Horario> horarioActualizado = horarioService.actualizar(id, nuevoHorario);
         if (horarioActualizado.isPresent()) {
             return new ResponseEntity<>(horarioActualizado.get(), HttpStatus.OK);
@@ -50,7 +50,7 @@ public class HorarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") String id) {
         horarioService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

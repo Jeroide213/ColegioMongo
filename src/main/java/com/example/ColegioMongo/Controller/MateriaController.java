@@ -24,7 +24,7 @@ public class MateriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Materia> obtenerPorId(@PathVariable("id") ObjectId id) {
+    public ResponseEntity<Materia> obtenerPorId(@PathVariable("id") String id) {
         Optional<Materia> materia = materiaService.obtenerPorId(id);
         if (materia.isPresent()) {
             return new ResponseEntity<>(materia.get(), HttpStatus.OK);
@@ -40,7 +40,7 @@ public class MateriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Materia> actualizar(@PathVariable("id") ObjectId id, @RequestBody Materia nuevaMateria) {
+    public ResponseEntity<Materia> actualizar(@PathVariable("id") String id, @RequestBody Materia nuevaMateria) {
         Optional<Materia> materiaActualizada = materiaService.actualizar(id, nuevaMateria);
         if (materiaActualizada.isPresent()) {
             return new ResponseEntity<>(materiaActualizada.get(), HttpStatus.OK);
@@ -50,7 +50,7 @@ public class MateriaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable("id") ObjectId id) {
+    public ResponseEntity<Void> eliminar(@PathVariable("id") String id) {
         materiaService.eliminar(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

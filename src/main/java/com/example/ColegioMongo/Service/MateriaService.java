@@ -22,13 +22,13 @@ public class MateriaService {
     public List<Materia> obtenerTodos() {
         return materiaRepository.findAll();
     }
-    public Optional<Materia> obtenerPorId(ObjectId id) {
+    public Optional<Materia> obtenerPorId(String id) {
         return materiaRepository.findById(id);
     }
     public Materia guardar(Materia materia) {
         return materiaRepository.save(materia);
     }
-    public Optional<Materia> actualizar(ObjectId id, Materia nuevaMateria) {
+    public Optional<Materia> actualizar(String id, Materia nuevaMateria) {
         Optional<Materia> materiaOptional = materiaRepository.findById(id);
         if (materiaOptional.isPresent()) {
             nuevaMateria.setId(id);
@@ -37,10 +37,10 @@ public class MateriaService {
             return Optional.empty();
         }
     }
-    public void eliminar(ObjectId id) {
+    public void eliminar(String id) {
         materiaRepository.deleteById(id);
     }
-    public void asignarProfesor(ObjectId idMateria, ObjectId idProfesor) {
+    public void asignarProfesor(String idMateria, String idProfesor) {
         Optional<Materia> materiaOptional = materiaRepository.findById(idMateria);
         Optional<Profesor> profesorOptional = profesorRepository.findById(idProfesor);
         if (materiaOptional.isPresent() && profesorOptional.isPresent()) {

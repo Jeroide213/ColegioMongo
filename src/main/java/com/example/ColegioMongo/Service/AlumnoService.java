@@ -25,7 +25,7 @@ public class AlumnoService {
         return alumnoRepository.findAll();
     }
 
-    public Optional<Alumno> obtenerPorId(ObjectId id) {
+    public Optional<Alumno> obtenerPorId(String id) {
         return alumnoRepository.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class AlumnoService {
         return alumnoRepository.save(alumno);
     }
 
-    public void eliminar(ObjectId id) {
+    public void eliminar(String id) {
         alumnoRepository.deleteById(id);
     }
 
@@ -42,7 +42,7 @@ public class AlumnoService {
         return alumnoRepository.findByNombre(nombre);
     }
 
-    public Optional<Alumno> actualizar(ObjectId id, Alumno nuevoAlumno) {
+    public Optional<Alumno> actualizar(String id, Alumno nuevoAlumno) {
         Optional<Alumno> alumnoOptional = alumnoRepository.findById(id);
         if (alumnoOptional.isPresent()) {
             nuevoAlumno.setId(id);
@@ -52,7 +52,7 @@ public class AlumnoService {
         }
     }
 
-    public void agregarAlumnoACurso(ObjectId idAlumno, ObjectId idCurso) {
+    public void agregarAlumnoACurso(String idAlumno, String idCurso) {
         Optional<Alumno> alumnoOptional = alumnoRepository.findById(idAlumno);
         Optional<Curso> cursoOptional = cursoRepository.findById(idCurso);
         if (alumnoOptional.isPresent() && cursoOptional.isPresent()) {

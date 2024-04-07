@@ -10,17 +10,17 @@ import java.time.LocalTime;
 @Document
 public class Horario {
     @Id
-    private ObjectId id;
+    private String id;
     private DayOfWeek diaSemana;
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private Materia materia;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,7 +59,7 @@ public class Horario {
     public Horario() {
     }
 
-    public Horario(ObjectId id, DayOfWeek diaSemana, LocalTime horaInicio, LocalTime horaFin, Materia materia) {
+    public Horario(String id, DayOfWeek diaSemana, LocalTime horaInicio, LocalTime horaFin, Materia materia) {
         this.id = id;
         this.diaSemana = diaSemana;
         this.horaInicio = horaInicio;
