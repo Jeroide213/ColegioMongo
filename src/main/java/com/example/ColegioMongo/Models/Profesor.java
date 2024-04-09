@@ -11,6 +11,7 @@ import java.time.Period;
 public class Profesor {
     @Id
     private String id;
+    private Long dni;
     private String nombre;
     private String apellido;
     private LocalDate fechaDeNacimiento;
@@ -31,6 +32,14 @@ public class Profesor {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Long getDni() {
+        return dni;
+    }
+
+    public void setDni(Long dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -76,8 +85,9 @@ public class Profesor {
     public Profesor() {
     }
 
-    public Profesor(String id, String nombre, String apellido, LocalDate fechaDeNacimiento, int antiguedad, byte[] matricula) {
+    public Profesor(String id, Long dni, String nombre, String apellido, LocalDate fechaDeNacimiento, int antiguedad, byte[] matricula) {
         this.id = id;
+        this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaDeNacimiento = fechaDeNacimiento;

@@ -31,9 +31,12 @@ public class AlumnoService {
 
     public Alumno guardar(Alumno alumno) {
         validarAlumno(alumno);
+        Optional<Alumno> alumnoExistente = alumnoRepository.findByDni(alumno.getDni());
+        if (alumnoExistente.isPresent()) {
+            throw new IllegalArgumentException("El DNI ya está registrado para otro alumno.");
+        }
         return alumnoRepository.save(alumno);
     }
-
     public void eliminar(String id) {
         alumnoRepository.deleteById(id);
     }
@@ -71,6 +74,10 @@ public class AlumnoService {
     }
 
     private void validarAlumno(Alumno alumno) {
+        if (alumno.getDni() == null || alumno.getDni() == 0) {
+            throw new IllegalArgumentException("El DNI del alumno no puede estar vacío");
+        }
+
         if (alumno.getNombre() == null || alumno.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del alumno no puede estar vacío");
         }
@@ -90,5 +97,8 @@ public class AlumnoService {
         if (alumno.getEspecialidad() == null || alumno.getEspecialidad().isEmpty()) {
             throw new IllegalArgumentException("La especialidad del alumno no puede estar vacía");
         }
+    }
+    public Optional<Alumno> buscarPorDni(Long dni) {
+        return alumnoRepository.findByDni(dni);
     }
 }

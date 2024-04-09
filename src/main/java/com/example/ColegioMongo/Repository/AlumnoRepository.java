@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface AlumnoRepository extends MongoRepository<Alumno, String> {
     List<Alumno> findByNombre(String nombre);
+    Optional<Alumno> findByDni(Long dni);
 }

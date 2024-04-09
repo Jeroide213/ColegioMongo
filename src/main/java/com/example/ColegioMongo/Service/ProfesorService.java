@@ -1,5 +1,6 @@
 package com.example.ColegioMongo.Service;
 
+import com.example.ColegioMongo.Models.Alumno;
 import com.example.ColegioMongo.Models.Profesor;
 import com.example.ColegioMongo.Repository.ProfesorRepository;
 import org.bson.types.ObjectId;
@@ -23,10 +24,17 @@ public class ProfesorService {
     }
     public Profesor guardar(Profesor profesor) {
         validarProfesor(profesor);
+        Optional<Profesor> profesorExistente = profesorRepository.findByDni(profesor.getDni());
+        if (profesorExistente.isPresent()) {
+            throw new IllegalArgumentException("El DNI ya está registrado para otro profesor.");
+        }
         return profesorRepository.save(profesor);
     }
 
     private void validarProfesor(Profesor profesor) {
+        if (profesor.getDni() == null || profesor.getDni() == 0) {
+            throw new IllegalArgumentException("El DNI del profesor no puede estar vacío");
+        }
         if (profesor.getNombre() == null || profesor.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del profesor no puede estar vacío");
         }
