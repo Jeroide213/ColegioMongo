@@ -2,8 +2,10 @@ package com.example.ColegioMongo.Service;
 
 import com.example.ColegioMongo.Models.Alumno;
 import com.example.ColegioMongo.Models.Curso;
+import com.example.ColegioMongo.Models.Profesor;
 import com.example.ColegioMongo.Repository.AlumnoRepository;
 import com.example.ColegioMongo.Repository.CursoRepository;
+import com.example.ColegioMongo.Repository.ProfesorRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class AlumnoService {
 
     @Autowired
     private CursoRepository cursoRepository;
+    @Autowired
+    private ProfesorRepository profesorRepository;
 
     public List<Alumno> obtenerTodos() {
         return alumnoRepository.findAll();
@@ -31,6 +35,10 @@ public class AlumnoService {
 
     public Alumno guardar(Alumno alumno) {
         validarAlumno(alumno);
+        Optional<Profesor> profesorExistente = profesorRepository.findByDni(alumno.getDni());
+        if (profesorExistente.isPresent()) {
+            throw new IllegalArgumentException("El DNI ya está registrado para otro profesor.");
+        }
         Optional<Alumno> alumnoExistente = alumnoRepository.findByDni(alumno.getDni());
         if (alumnoExistente.isPresent()) {
             throw new IllegalArgumentException("El DNI ya está registrado para otro alumno.");
