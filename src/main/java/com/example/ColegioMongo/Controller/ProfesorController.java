@@ -2,7 +2,6 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Profesor;
 import com.example.ColegioMongo.Service.ProfesorService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
