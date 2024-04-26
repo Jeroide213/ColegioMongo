@@ -2,11 +2,10 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Alumno;
 import com.example.ColegioMongo.Service.AlumnoService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +15,9 @@ import java.util.Optional;
 public class AlumnoController {
     @Autowired
     private AlumnoService alumnoService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @GetMapping
     public ResponseEntity<List<Alumno>> obtenerTodos() {
@@ -33,10 +35,27 @@ public class AlumnoController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Alumno> guardar(@RequestBody Alumno alumno) {
-        Alumno nuevoAlumno = alumnoService.guardar(alumno);
-        return new ResponseEntity<>(nuevoAlumno, HttpStatus.CREATED);
+    @PostMapping("/guardar")
+    public ResponseEntity<String> guardar(@RequestBody Alumno alumno) {
+        try {
+            // Guarda al alumno en la API interna
+            Alumno nuevoAlumno = alumnoService.guardar(alumno);
+
+            // Prepara la solicitud para crear un usuario en la API externa de logins
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            String requestBody = "{\"username\": \"" + alumno.getDni() + "\", \"password\": \"" + alumno.getDni() + "\", \"rol\": \"ALUMNO\"}";
+            HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+            // Envía la solicitud para crear el usuario en la API externa
+            restTemplate.postForObject("http://localhost:8081/api/crearUsuario", requestEntity, String.class);
+
+            // Devuelve una respuesta con el alumno creado en la API interna
+            return ResponseEntity.status(HttpStatus.CREATED).body("Alumno registrado y usuario creado exitosamente.");
+        } catch (Exception e) {
+            // Devuelve una respuesta con el error si ocurre algún problema
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al registrar el alumno: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

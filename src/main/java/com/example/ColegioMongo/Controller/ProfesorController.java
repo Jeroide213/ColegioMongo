@@ -3,9 +3,11 @@ package com.example.ColegioMongo.Controller;
 import com.example.ColegioMongo.Models.Profesor;
 import com.example.ColegioMongo.Service.ProfesorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,10 @@ import java.util.Optional;
 public class ProfesorController {
     @Autowired
     private ProfesorService profesorService;
+    @Autowired
+    private RestTemplate restTemplate; // Inyecta RestTemplate
+    @Value("${api.externa.url}")
+    private String apiExternaUrl;
 
     @GetMapping
     public ResponseEntity<List<Profesor>> obtenerTodos() {
