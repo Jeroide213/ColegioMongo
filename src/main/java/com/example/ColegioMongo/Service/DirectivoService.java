@@ -1,10 +1,13 @@
 package com.example.ColegioMongo.Service;
 
-import com.example.ColegioMongo.Models.Alumno;
 import com.example.ColegioMongo.Models.Directivo;
 import com.example.ColegioMongo.Repository.DirectivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +17,8 @@ import java.util.Optional;
 public class DirectivoService {
     @Autowired
     private DirectivoRepository directivoRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public List<Directivo> obtenerTodos() {
         return directivoRepository.findAll();
@@ -43,6 +48,13 @@ public class DirectivoService {
         if (directivoExistente.isPresent()) {
             throw new IllegalArgumentException("El DNI ya está registrado para otro alumno.");
         }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestBody = "{\"username\": \"" + directivo.getDni() + "\", \"password\": \"" + directivo.getDni() + "\", \"rol\": \"DIRECTIVO\"}";
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Enviar la solicitud para crear el usuario en la API externa
+        restTemplate.postForObject("http://localhost:8081/api/crearUsuario", requestEntity, String.class);
         return directivoRepository.save(directivo);
     }
 
