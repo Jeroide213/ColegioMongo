@@ -8,7 +8,11 @@ import com.example.ColegioMongo.Repository.CursoRepository;
 import com.example.ColegioMongo.Repository.ProfesorRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +28,8 @@ public class AlumnoService {
     private CursoRepository cursoRepository;
     @Autowired
     private ProfesorRepository profesorRepository;
+    @Autowired
+    private RestTemplate restTemplate;
 
     public List<Alumno> obtenerTodos() {
         return alumnoRepository.findAll();
@@ -43,8 +49,16 @@ public class AlumnoService {
         if (alumnoExistente.isPresent()) {
             throw new IllegalArgumentException("El DNI ya está registrado para otro alumno.");
         }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String requestBody = "{\"username\": \"" + alumno.getDni() + "\", \"password\": \"" + alumno.getDni() + "\", \"rol\": \"ALUMNO\"}";
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        // Enviar la solicitud para crear el usuario en la API externa
+        restTemplate.postForObject("http://localhost:8081/api/crearUsuario", requestEntity, String.class);
         return alumnoRepository.save(alumno);
     }
+
     public void eliminar(String id) {
         alumnoRepository.deleteById(id);
     }

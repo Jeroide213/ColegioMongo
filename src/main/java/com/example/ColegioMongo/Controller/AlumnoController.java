@@ -5,8 +5,6 @@ import com.example.ColegioMongo.Service.AlumnoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +13,6 @@ import java.util.Optional;
 public class AlumnoController {
     @Autowired
     private AlumnoService alumnoService;
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     @GetMapping
     public ResponseEntity<List<Alumno>> obtenerTodos() {
@@ -40,15 +35,6 @@ public class AlumnoController {
         try {
             // Guarda al alumno en la API interna
             Alumno nuevoAlumno = alumnoService.guardar(alumno);
-
-            // Prepara la solicitud para crear un usuario en la API externa de logins
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            String requestBody = "{\"username\": \"" + alumno.getDni() + "\", \"password\": \"" + alumno.getDni() + "\", \"rol\": \"ALUMNO\"}";
-            HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
-
-            // Envía la solicitud para crear el usuario en la API externa
-            restTemplate.postForObject("http://localhost:8081/api/crearUsuario", requestEntity, String.class);
 
             // Devuelve una respuesta con el alumno creado en la API interna
             return ResponseEntity.status(HttpStatus.CREATED).body("Alumno registrado y usuario creado exitosamente.");
