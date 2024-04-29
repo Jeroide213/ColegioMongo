@@ -4,7 +4,6 @@ import com.example.ColegioMongo.Models.Materia;
 import com.example.ColegioMongo.Models.Profesor;
 import com.example.ColegioMongo.Repository.MateriaRepository;
 import com.example.ColegioMongo.Repository.ProfesorRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +13,25 @@ import java.util.Optional;
 
 @Service
 public class MateriaService {
+
     @Autowired
     private MateriaRepository materiaRepository;
+
     @Autowired
     private ProfesorRepository profesorRepository;
 
     public List<Materia> obtenerTodos() {
         return materiaRepository.findAll();
     }
+
     public Optional<Materia> obtenerPorId(String id) {
         return materiaRepository.findById(id);
     }
+
     public Materia guardar(Materia materia) {
         return materiaRepository.save(materia);
     }
+
     public Optional<Materia> actualizar(String id, Materia nuevaMateria) {
         Optional<Materia> materiaOptional = materiaRepository.findById(id);
         if (materiaOptional.isPresent()) {
@@ -37,9 +41,11 @@ public class MateriaService {
             return Optional.empty();
         }
     }
+
     public void eliminar(String id) {
         materiaRepository.deleteById(id);
     }
+
     public void asignarProfesor(String idMateria, String idProfesor) {
         Optional<Materia> materiaOptional = materiaRepository.findById(idMateria);
         Optional<Profesor> profesorOptional = profesorRepository.findById(idProfesor);
