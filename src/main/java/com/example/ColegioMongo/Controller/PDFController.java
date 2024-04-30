@@ -18,7 +18,7 @@ public class PDFController {
                 return "Documento guardado exitosamente";
             } catch (IOException e) {
                 e.printStackTrace();
-                return "Error al guardar el documento: " + e.getMessage();
+                return "Error al saveStudent el documento: " + e.getMessage();
             }
         } else {
             return "El archivo PDF está vacío";

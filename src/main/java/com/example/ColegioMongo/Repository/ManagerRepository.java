@@ -1,7 +1,6 @@
 package com.example.ColegioMongo.Repository;
 
-import com.example.ColegioMongo.Models.Materia;
-import org.bson.types.ObjectId;
+import com.example.ColegioMongo.Models.Managers;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MateriaRepository extends MongoRepository<Materia, String> {
-    List<Materia> findByNombre(String nombre);
+public interface ManagerRepository extends MongoRepository<Managers, String> {
+    List<Managers> findByName(String name);
+    Optional<Managers> findByDni(Long dni);
 }
