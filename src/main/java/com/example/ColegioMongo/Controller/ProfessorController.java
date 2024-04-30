@@ -2,6 +2,9 @@ package com.example.ColegioMongo.Controller;
 
 import com.example.ColegioMongo.Models.Professor;
 import com.example.ColegioMongo.Service.ProfessorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,12 +25,18 @@ public class ProfessorController {
     @Value("${api.externa.url}")
     private String apiExternaUrl;
 
+    @Operation(summary = "Obtener todos los profesores")
     @GetMapping
     public ResponseEntity<List<Professor>> getAll() {
         List<Professor> professors = professorService.getAll();
         return new ResponseEntity<>(professors, HttpStatus.OK);
     }
 
+    @Operation(summary = "Obtener un profesor por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se ha encontrado el profesor"),
+            @ApiResponse(responseCode = "404", description = "No se ha encontrado el profesor")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Professor> getById(@PathVariable("id") String id) {
         Optional<Professor> professor = professorService.getById(id);
@@ -38,12 +47,18 @@ public class ProfessorController {
         }
     }
 
+    @Operation(summary = "Guardar un nuevo profesor")
     @PostMapping
     public ResponseEntity<Professor> saveProfessor(@RequestBody Professor professor) {
         Professor newProfessor = professorService.saveProfessor(professor);
         return new ResponseEntity<>(newProfessor, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Actualizar un profesor existente por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Profesor actualizado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "No se ha encontrado el profesor")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Professor> updateProfessor(@PathVariable("id") String id, @RequestBody Professor newProfessor) {
         Optional<Professor> updatedProfessor = professorService.updateProfessor(id, newProfessor);
@@ -54,6 +69,11 @@ public class ProfessorController {
         }
     }
 
+    @Operation(summary = "Eliminar un profesor por su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Profesor eliminado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "No se ha encontrado el profesor")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProfessor(@PathVariable("id") String id) {
         professorService.deleteProfessor(id);
